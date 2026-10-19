@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body>
+<header th:replace="~{fragments :: navbar}"></header>
+<main class="container">
+  <div class="row">
+    <h1>Hello, <span th:text="${user.fullName}">User</span></h1>
+    <a th:href="@{/tasks/new}" class="btn primary">+ New Task</a>
+  </div>
+
+  <div class="alert success" th:if="${success}" th:text="${success}"></div>
+
+  <div class="stats">
+    <div class="stat"><strong th:text="${todoCount}">0</strong><span>To do</span></div>
+    <div class="stat"><strong th:text="${progressCount}">0</strong><span>In progress</span></div>
+    <div class="stat"><strong th:text="${doneCount}">0</strong><span>Done</span></div>
+  </div>
+
+  <p class="muted" th:if="${#lists.isEmpty(tasks)}">You have no tasks yet. Click "New Task" to add one.</p>
+
+  <div class="table-wrap" th:unless="${#lists.isEmpty(tasks)}">
+    <table>
+      <thead>
+        <tr><th>Title</th><th>Status</th><th>Due</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr th:each="t : ${tasks}">
+          <td>
+            <strong th:text="${t.title}">Title</strong>
+            <div class="muted small" th:if="${t.description}" th:text="${t.description}"></div>
+          </td>
+          <td>
+            <form th:action="@{/tasks/{id}/status(id=${t.id})}" method="post" class="inline">
+              <select name="status" onchange="this.form.submit()">
+                <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${s == t.status}"></option>
+              </select>
+            </form>
+          </td>
+          <td th:text="${t.dueDate != null} ? ${t.dueDate} : '-'">-</td>
+          <td class="actions-cell">
+            <a th:href="@{/tasks/{id}/edit(id=${t.id})}" class="btn small">Edit</a>
+            <form th:action="@{/tasks/{id}/delete(id=${t.id})}" method="post" class="inline"
+                  onsubmit="return confirm('Delete this task?')">
+              <button class="btn small danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

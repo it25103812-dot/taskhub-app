@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Register')}"></head>
+<body>
+<header th:replace="~{fragments :: navbar}"></header>
+<main class="container narrow">
+  <div class="panel">
+    <h1>Create account</h1>
+    <form th:action="@{/register}" th:object="${form}" method="post" class="stack">
+      <label>Full name
+        <input type="text" th:field="*{fullName}">
+        <small class="err" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></small>
+      </label>
+      <label>Email
+        <input type="email" th:field="*{email}">
+        <small class="err" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+      </label>
+      <label>Password
+        <input type="password" th:field="*{password}">
+        <small class="err" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+      </label>
+      <label>Confirm password
+        <input type="password" th:field="*{confirmPassword}">
+        <small class="err" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+      </label>
+      <button class="btn primary" type="submit">Register</button>
+    </form>
+    <p class="muted">Already registered? <a th:href="@{/login}">Login</a></p>
+  </div>
+</main>
+</body>
+</html>

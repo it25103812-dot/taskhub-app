@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+<header th:replace="~{fragments :: navbar}"></header>
+<main class="container hero">
+  <h1>Organise your work with <span class="accent">TaskHub</span></h1>
+  <p class="lead">Create an account, add your tasks and track them from TODO to DONE. Your data is saved in MySQL and only you can see it.</p>
+  <div class="actions" sec:authorize="!isAuthenticated()">
+    <a th:href="@{/register}" class="btn primary">Get started</a>
+    <a th:href="@{/login}" class="btn">Login</a>
+  </div>
+  <div class="actions" sec:authorize="isAuthenticated()">
+    <a th:href="@{/dashboard}" class="btn primary">Go to dashboard</a>
+  </div>
+</main>
+</body>
+</html>

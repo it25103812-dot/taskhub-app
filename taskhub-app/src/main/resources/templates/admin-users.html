@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Users')}"></head>
+<body>
+<header th:replace="~{fragments :: navbar}"></header>
+<main class="container">
+  <h1>All users</h1>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Registered</th></tr>
+      </thead>
+      <tbody>
+        <tr th:each="u : ${users}">
+          <td th:text="${u.id}">1</td>
+          <td th:text="${u.fullName}">Name</td>
+          <td th:text="${u.email}">email</td>
+          <td th:text="${u.role}">USER</td>
+          <td th:text="${#temporals.format(u.createdAt, 'yyyy-MM-dd HH:mm')}">date</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

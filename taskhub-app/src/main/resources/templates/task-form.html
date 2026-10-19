@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Task')}"></head>
+<body>
+<header th:replace="~{fragments :: navbar}"></header>
+<main class="container narrow">
+  <div class="panel">
+    <h1 th:text="${heading}">Task</h1>
+    <form th:action="@{/tasks/save}" th:object="${taskForm}" method="post" class="stack">
+      <input type="hidden" th:field="*{id}">
+      <label>Title
+        <input type="text" th:field="*{title}">
+        <small class="err" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+      </label>
+      <label>Description
+        <textarea rows="4" th:field="*{description}"></textarea>
+        <small class="err" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+      </label>
+      <label>Status
+        <select th:field="*{status}">
+          <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+        </select>
+      </label>
+      <label>Due date
+        <input type="date" th:field="*{dueDate}">
+      </label>
+      <div class="actions">
+        <button class="btn primary" type="submit">Save</button>
+        <a th:href="@{/dashboard}" class="btn">Cancel</a>
+      </div>
+    </form>
+  </div>
+</main>
+</body>
+</html>
